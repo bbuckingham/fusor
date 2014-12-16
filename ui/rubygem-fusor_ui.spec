@@ -110,12 +110,15 @@ export BUNDLER_EXT_GROUPS="default assets fusor_ui"
 popd
 rm -rf ./usr
 
-mkdir -p %{buildroot}%{foreman_bundlerd_dir}
-cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
-group :fusor_ui do
-  gem '%{gem_name}'
-end
-GEMFILE
+#mkdir -p %{buildroot}%{foreman_bundlerd_dir}
+#cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
+#group :fusor_ui do
+#  gem '%{gem_name}'
+#end
+#GEMFILE
+
+%foreman_precompile_plugin
+%foreman_bundlerd_file
 
 #TODO mkdir -p %{buildroot}%{foreman_dir}/public/assets
 #TODO ln -s %{gem_instdir}/public/assets %{buildroot}%{foreman_dir}/public/assets
