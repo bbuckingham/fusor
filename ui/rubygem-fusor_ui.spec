@@ -85,43 +85,60 @@ gem install --local --install-dir .%{gem_dir} --force %{SOURCE0}
 %build
 
 %install
+
 mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
-mkdir -p ./usr/share
-cp -r %{foreman_dir} ./usr/share || echo 0
-
-pushd ./usr/share/foreman
-export GEM_PATH=%{gem_dir}:%{buildroot}%{gem_dir}
-
-cat <<GEMFILE > ./bundler.d/%{gem_name}.rb
-group :fusor_ui do
-  gem '%{gem_name}'
-end
+mkdir -p %{buildroot}%{foreman_bundlerd_dir}
+cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
+gem '%{gem_name}'
 GEMFILE
-
-unlink tmp
-
-export BUNDLER_EXT_NOSTRICT=1
-export BUNDLER_EXT_GROUPS="default assets fusor_ui"
-#TODO %{scl_rake} assets:precompile:fusor_ui RAILS_ENV=production --trace
-
-popd
-rm -rf ./usr
-
-#mkdir -p %{buildroot}%{foreman_bundlerd_dir}
-#cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
-#group :fusor_ui do
-#  gem '%{gem_name}'
-#end
-#GEMFILE
 
 %foreman_precompile_plugin
 %foreman_bundlerd_file
 
-#TODO mkdir -p %{buildroot}%{foreman_dir}/public/assets
-#TODO ln -s %{gem_instdir}/public/assets %{buildroot}%{foreman_dir}/public/assets
+#mkdir -p %{buildroot}%{foreman_dir}/public/assets
+#ln -s %{foreman_assets_plugin} %{buildroot}%{foreman_dir}/public/assets/bastion
+##############################################
+
+#mkdir -p %{buildroot}%{gem_dir}
+#cp -a .%{gem_dir}/* \
+#        %{buildroot}%{gem_dir}/
+#
+#mkdir -p ./usr/share
+#cp -r %{foreman_dir} ./usr/share || echo 0
+#
+#pushd ./usr/share/foreman
+#export GEM_PATH=%{gem_dir}:%{buildroot}%{gem_dir}
+#
+#cat <<GEMFILE > ./bundler.d/%{gem_name}.rb
+#group :fusor_ui do
+#  gem '%{gem_name}'
+#end
+#GEMFILE
+#
+#unlink tmp
+#
+#export BUNDLER_EXT_NOSTRICT=1
+#export BUNDLER_EXT_GROUPS="default assets fusor_ui"
+##TODO %{scl_rake} assets:precompile:fusor_ui RAILS_ENV=production --trace
+#
+#popd
+#rm -rf ./usr
+##
+##mkdir -p %{buildroot}%{foreman_bundlerd_dir}
+##cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
+##group :fusor_ui do
+##  gem '%{gem_name}'
+##end
+##GEMFILE
+#
+#%foreman_precompile_plugin
+#%foreman_bundlerd_file
+
+##TODO mkdir -p %{buildroot}%{foreman_dir}/public/assets
+##TODO ln -s %{gem_instdir}/public/assets %{buildroot}%{foreman_dir}/public/assets
 
 %clean
 %{__rm} -rf %{buildroot}
