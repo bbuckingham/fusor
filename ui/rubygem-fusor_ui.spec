@@ -99,9 +99,7 @@ GEMFILE
 %foreman_bundlerd_file
 
 mkdir -p %{buildroot}%{foreman_dir}/public/assets
-#ln -s %{gem_instdir}/public/assets %{buildroot}%{foreman_dir}/public/assets
-ln -s %{foreman_assets_plugin} %{buildroot}%{foreman_dir}/public/assets
-##############################################
+ln -s %{foreman_assets_plugin} %{buildroot}%{foreman_dir}/public/assets/fusor_ui
 
 %clean
 %{__rm} -rf %{buildroot}
@@ -112,8 +110,7 @@ ln -s %{foreman_assets_plugin} %{buildroot}%{foreman_dir}/public/assets
 %exclude %{gem_cache}
 %{gem_spec}
 %{foreman_bundlerd_dir}/%{gem_name}.rb
-#%{gem_instdir}/public/assets/%{gem_name}
-%{foreman_dir}/public/assets
+%{foreman_dir}/public/assets/fusor_ui
 %{foreman_assets_plugin}
 
 %files doc
