@@ -40,14 +40,14 @@ module FusorUi
                                        'fusor_ui/fusor_ui.js'] } }
     end
 
-    initializer "fusor_ui.plugin", :group => :all do |app|
-      SETTINGS[:fusor_ui] = {:assets => {}} if SETTINGS[:fusor_ui].nil?
-
-      SETTINGS[:fusor_ui][:assets][:precompile] = [
-        'fusor_ui/fusor_ui.css',
-        'fusor_ui/fusor_ui.js'
-      ]
-    end
+#    initializer "fusor_ui.plugin", :group => :all do |app|
+#      SETTINGS[:fusor_ui] = {:assets => {}} if SETTINGS[:fusor_ui].nil?
+#
+#      SETTINGS[:fusor_ui][:assets][:precompile] = [
+#        'fusor_ui/fusor_ui.css',
+#        'fusor_ui/fusor_ui.js'
+#      ]
+#    end
 
   end
 end

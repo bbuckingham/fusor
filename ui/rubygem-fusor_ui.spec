@@ -90,16 +90,16 @@ mkdir -p %{buildroot}%{gem_dir}
 cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
-mkdir -p %{buildroot}%{foreman_bundlerd_dir}
-cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
-gem '%{gem_name}'
-GEMFILE
+#mkdir -p %{buildroot}%{foreman_bundlerd_dir}
+#cat <<GEMFILE > %{buildroot}%{foreman_bundlerd_dir}/%{gem_name}.rb
+#gem '%{gem_name}'
+#GEMFILE
 
-%foreman_precompile_plugin
 %foreman_bundlerd_file
+%foreman_precompile_plugin
 
-mkdir -p %{buildroot}%{foreman_dir}/public/assets
-ln -s %{foreman_assets_plugin} %{buildroot}%{foreman_dir}/public/assets/fusor_ui
+#mkdir -p %{buildroot}%{foreman_dir}/public/assets
+#ln -s %{foreman_assets_plugin} %{buildroot}%{foreman_dir}/public/assets/fusor_ui
 
 %clean
 %{__rm} -rf %{buildroot}
