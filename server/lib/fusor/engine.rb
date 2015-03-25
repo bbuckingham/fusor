@@ -22,7 +22,7 @@ module Fusor
       app.routes_reloader.paths << "#{Fusor::Engine.root}/config/routes/api/v21.rb"
     end
 
-    initializer 'fusor.register_plugin', :after => :finisher_hook do |app|
+    initializer 'fusor.register_plugin', :after => :finisher_hook do
       Foreman::Plugin.register :fusor do
         requires_foreman '>= 1.7'
 
@@ -34,6 +34,7 @@ module Fusor
         # Add a new role called 'Discovery' if it doesn't exist
         # role "Fusor", [:view_fusor]
 
+        apipie_documented_controllers ["#{Fusor::Engine.root}/app/controllers/fusor/api/v2/*.rb"]
       end
     end
 

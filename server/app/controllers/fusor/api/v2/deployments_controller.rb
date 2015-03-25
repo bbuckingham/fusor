@@ -15,30 +15,46 @@ module Fusor
 
    before_filter :find_deployment, :only => [:destroy, :show, :update, :deploy]
 
-    def index
+   def_param_group :deployment do
+     param :name, :identifier, :action_aware => true, :required => true, :desc => N_("name of the deployment")
+   end
+
+   api :GET, "/deployments", N_("List deployments")
+   def index
       respond :collection => Deployment.all
     end
 
-    def show
+   api :GET, "/deployments/:id", N_("Show a deployment")
+   param :id, :identifier, :desc => N_("deployment numeric identifier"), :required => true
+   def show
       respond :resource => @deployment
     end
 
-    def create
+   api :POST, "/deployments", N_("Create a deployment")
+   param_group :deployment
+   def create
       @deployment = Deployment.create!(params[:deployment])
       respond_for_show :resource => @deployment
     end
 
-    def update
+   api :PUT, "/deployments/:id", N_("Update a deployment")
+   param :id, :identifier, :desc => N_("deployment numeric identifier"), :required => true
+   param_group :deployment
+   def update
       @deployment.update_attributes!(params[:deployment])
       respond_for_show :resource => @deployment
     end
 
-    def destroy
+   api :DELETE, "/deployments/:id", N_("Destroy a deployment")
+   param :id, :number, :desc => N_("deployment numeric identifier"), :required => true
+   def destroy
       @deployment.destroy
       respond_for_show :resource => @deployment
     end
 
-    def deploy
+   api :PUT, "/deployments/:id", N_("Perform a deployment")
+   param :id, :identifier, :desc => N_("deployment numeric identifier"), :required => true
+   def deploy
       task = async_task(::Actions::Fusor::Deploy, @deployment)
       respond_for_async :resource => task
     end
