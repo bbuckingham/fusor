@@ -41,6 +41,9 @@ module Actions
 
             plan_action(::Actions::Fusor::Host::WaitUntilProvisioned,
                         deployment.rhev_engine_host)
+
+            # TODO: the actions below are simply to test out performing a separate puppet run...
+            plan_action(::Actions::Fusor::Deployment::RhevEnginePuppetRun, deployment)
           end
         end
 

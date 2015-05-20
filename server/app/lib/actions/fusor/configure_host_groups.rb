@@ -129,7 +129,7 @@ module Actions
                                    :value => activation_key_name(deployment))
         end
         apply_setting_parameter_overrides(hostgroup, hostgroup_settings, puppet_environment)
-        apply_deployment_parameter_overrides(hostgroup, deployment, product_type, puppet_environment)
+        #apply_deployment_parameter_overrides(hostgroup, deployment, product_type, puppet_environment)
       end
 
       def apply_setting_parameter_overrides(hostgroup, hostgroup_settings, puppet_environment)
